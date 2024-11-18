@@ -45,7 +45,8 @@ constexpr auto qt_meta_stringdata_CLASSTcpFileSenderENDCLASS = QtMocHelpers::str
     "startTransfer",
     "updateClientProgress",
     "numBytes",
-    "openFile"
+    "openFile",
+    "updateDest"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -58,7 +59,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSTcpFileSenderENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -66,15 +67,17 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSTcpFileSenderENDCLASS[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   38,    2, 0x0a,    1 /* Public */,
-       3,    0,   39,    2, 0x0a,    2 /* Public */,
-       4,    1,   40,    2, 0x0a,    3 /* Public */,
-       6,    0,   43,    2, 0x0a,    5 /* Public */,
+       1,    0,   44,    2, 0x0a,    1 /* Public */,
+       3,    0,   45,    2, 0x0a,    2 /* Public */,
+       4,    1,   46,    2, 0x0a,    3 /* Public */,
+       6,    0,   49,    2, 0x0a,    5 /* Public */,
+       7,    0,   50,    2, 0x0a,    6 /* Public */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::LongLong,    5,
+    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -97,6 +100,8 @@ Q_CONSTINIT const QMetaObject TcpFileSender::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<qint64, std::false_type>,
         // method 'openFile'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'updateDest'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -112,6 +117,7 @@ void TcpFileSender::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         case 1: _t->startTransfer(); break;
         case 2: _t->updateClientProgress((*reinterpret_cast< std::add_pointer_t<qint64>>(_a[1]))); break;
         case 3: _t->openFile(); break;
+        case 4: _t->updateDest(); break;
         default: ;
         }
     }
@@ -136,13 +142,13 @@ int TcpFileSender::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 5)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 4;
+        _id -= 5;
     }
     return _id;
 }

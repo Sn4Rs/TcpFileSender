@@ -16,6 +16,10 @@ private:
     QPushButton     *openbtn;
     QTcpSocket      tcpClient;
     QDialogButtonBox *btnbox;
+    QLabel          *destAddrLabel;
+    QLineEdit       *editAddr;
+    QLabel          *destportLabel;
+    QLineEdit       *editport;
 
     qint64          totalBytes;
     qint64          bytesWritten;
@@ -24,6 +28,8 @@ private:
     QString         fileName;
     QFile           *localFile;
     QByteArray      outBlock;
+    QString         hostadd;
+    quint16         hostport;
 public:
     TcpFileSender(QWidget *parent = nullptr);
     ~TcpFileSender();
@@ -33,5 +39,6 @@ public slots:
     void startTransfer();
     void updateClientProgress(qint64 numBytes);
     void openFile();
+    void updateDest();
 };
 #endif // TCPFILESENDER_H

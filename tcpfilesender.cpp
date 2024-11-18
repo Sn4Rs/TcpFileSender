@@ -1,5 +1,5 @@
 #include "tcpfilesender.h"
-
+#include <cstdlib>
 TcpFileSender::TcpFileSender(QWidget *parent)
     : QDialog(parent)
 {
@@ -7,6 +7,11 @@ TcpFileSender::TcpFileSender(QWidget *parent)
     totalBytes=0;
     bytesWritten=0;
     bytesToWrite=0;
+    destAddrLabel = new QLabel("目的端IP位址");
+    editAddr = new QLineEdit;
+    destportLabel = new QLabel("目的port");
+    editport = new QLineEdit;
+
     clientProgressBar=new QProgressBar;
     clientStatusLabel=new QLabel(QStringLiteral("客戶端就緒"));
     openbtn=new QPushButton(QStringLiteral("開檔"));
@@ -19,29 +24,45 @@ TcpFileSender::TcpFileSender(QWidget *parent)
     btnbox->addButton(quitbtn,QDialogButtonBox::RejectRole);
 
     QVBoxLayout *mainlay = new QVBoxLayout;
+
     mainlay->addWidget(clientProgressBar);
     mainlay->addWidget(clientStatusLabel);
     mainlay->addStretch(1);
     mainlay->addSpacing(10);
     mainlay->addWidget(btnbox);
+    mainlay->addWidget(destAddrLabel);
+    mainlay->addWidget(editAddr);
+    mainlay->addWidget(destportLabel);
+    mainlay->addWidget(editport);
     setLayout(mainlay);
     setWindowTitle(tr("檔案傳送"));
+
+    hostadd = "";
+    hostport=16998;
 
     connect(openbtn,SIGNAL(clicked()),this,SLOT(openFile()));
     connect(startBtn,SIGNAL(clicked()),this,SLOT(start()));
     connect(&tcpClient,SIGNAL(connected()),this,SLOT(startTransfer()));
     connect(&tcpClient,SIGNAL(bytesWritten(qint64)),this,SLOT(updateClientProgress(qint64)));
     connect(quitbtn,SIGNAL(clicked()),this,SLOT(close()));
+    connect(editAddr,SIGNAL(textChanged(QString)),this,SLOT(updateDest()));
+    connect(editport,SIGNAL(textChanged(QString)),this,SLOT(updateDest()));
+}
+
+void TcpFileSender::updateDest()
+{
+    hostadd = editAddr->text();
+    hostport = editport->text().toInt();
 }
 
 void TcpFileSender::start()
 {
-    QString hostadd="140.130.35.52";
+    //QString hostadd="140.130.35.52";
     startBtn->setEnabled(false);
     bytesWritten = 0;
     clientStatusLabel->setText(tr("連接中..."));
     //tcpClient.connectToHost(QHostAddress::LocalHost,16998);
-    tcpClient.connectToHost(hostadd,16998);
+    tcpClient.connectToHost(hostadd,hostport);
 }
 void TcpFileSender::startTransfer()
 {
